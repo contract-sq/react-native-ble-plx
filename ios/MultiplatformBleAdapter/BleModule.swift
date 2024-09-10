@@ -848,22 +848,27 @@ public class BleClientManager : NSObject {
                                          promise: SafePromise(resolve: resolve, reject: reject))
     }
 
+    let customQueue = DispatchQueue(label: "com.pulsetto.bleexecturionqueue", qos: .userInitiated)
+    
     @objc
     public func writeDoubleCharacteristic(_ characteristicIdentifier: Double,
-                                    valueBase64: String,
-                                    response: Bool,
-                                    transactionId: String,
-                                    delayMilliseconds: Int,  // Delay for the second command
-                                    resolve: @escaping Resolve,
-                                    reject: @escaping Reject) {
+                                          valueBase64: String,
+                                          response: Bool,
+                                          transactionId: String,
+                                          delayMilliseconds: Int,  // Delay for the second command
+                                          resolve: @escaping Resolve,
+                                          reject: @escaping Reject) {
         guard let value = valueBase64.fromBase64 else {
             return BleError.invalidWriteDataForCharacteristic(characteristicIdentifier.description, data: valueBase64)
                 .callReject(reject)
         }
 
+        // Capture the start time
+        let startTime = DispatchTime.now()
+        
         // Create a dispatch group to wait for both writes to complete
         let dispatchGroup = DispatchGroup()
-
+        
         // Start the first write immediately
         dispatchGroup.enter()  // Enter the group for the first operation
         safeWriteCharacteristicForDevice(getCharacteristic(characteristicIdentifier),
@@ -876,11 +881,21 @@ public class BleClientManager : NSObject {
                                              },
                                              reject: reject)
                                          )
-
+        
         // Delay the second write by the specified number of milliseconds
         let delayTime = DispatchTime.now() + .milliseconds(delayMilliseconds)
         dispatchGroup.enter()  // Enter the group for the second operation
-        DispatchQueue.global().asyncAfter(deadline: delayTime) {
+        
+        customQueue.asyncAfter(deadline: delayTime) {
+            // Capture the current time just before the second write
+            let secondWriteTime = DispatchTime.now()
+            
+            // Calculate the time difference between the first and second write
+            let duration = Double(secondWriteTime.uptimeNanoseconds - startTime.uptimeNanoseconds) / 1_000_000  // Convert to milliseconds
+            
+            // Print the time duration between the two calls
+            print("Duration between the two write calls to Pulsetto: \(duration) milliseconds")
+            
             let newTransactionId = transactionId + "_delayed"
             self.safeWriteCharacteristicForDevice(self.getCharacteristic(characteristicIdentifier),
                                                   value: value,
@@ -893,7 +908,7 @@ public class BleClientManager : NSObject {
                                                       reject: reject)
                                                   )
         }
-
+        
         // Once both operations (first and delayed) are done, resolve the promise
         dispatchGroup.notify(queue: DispatchQueue.main) {
             resolve(true)  // Resolve the promise after both operations

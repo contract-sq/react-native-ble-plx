@@ -354,6 +354,8 @@ RCT_EXPORT_METHOD(writeDoubleCharacteristic:(nonnull NSNumber*)characteristicIde
                 delayMilliseconds:delayMilliseconds  // Pass delay to the native method
                           resolve:resolve
                            reject:reject];
+}
+
 
 RCT_EXPORT_METHOD(monitorCharacteristicForDevice:(NSString*)deviceIdentifier
                                      serviceUUID:(NSString*)serviceUUID

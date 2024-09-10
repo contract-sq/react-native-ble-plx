@@ -1952,7 +1952,7 @@ declare module 'react-native-ble-plx' {
      * @returns {Promise<Characteristic>} Promise which emits this {@link Characteristic}. Latest value may
      * not be stored inside returned object.
      */
-    writeDoubleWithResponse(valueBase64: Base64, transactionId?: string): Promise<Characteristic>
+    writeDoubleWithResponse(valueBase64: Base64, transactionId?: string, delayMilliseconds: number): Promise<Characteristic>
 
     /**
      * {@link #blemanagerwritecharacteristicwithoutresponsefordevice|bleManager.writeCharacteristicWithoutResponseForDevice()} with partially filled arguments.
