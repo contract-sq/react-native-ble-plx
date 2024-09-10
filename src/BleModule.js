@@ -601,6 +601,25 @@ export interface BleModuleInterface {
   ): Promise<NativeCharacteristic>;
 
   /**
+   * Write value to characteristic.
+   *
+   * @param {Identifier} characteristicIdentifier Characteristic ID
+   * @param {Base64} valueBase64 Value to be set coded in Base64
+   * @param {boolean} withResponse True if write should be with response
+   * @param {TransactionId} transactionId Transaction handle used to cancel operation
+   * @param {number} delayMilliseconds delay in milliseconds for the second command to be sent
+   * @returns {Promise<NativeCharacteristic>} Characteristic which saved passed value
+   * @private
+   */
+  writeDoubleCharacteristic(
+    characteristicIdentifier: Identifier,
+    valueBase64: Base64,
+    withResponse: boolean,
+    transactionId: TransactionId,
+    delayMilliseconds: number
+  ): Promise<NativeCharacteristic>;
+
+  /**
    * Setup monitoring of characteristic value.
    *
    * @param {DeviceId} deviceIdentifier Connected device identifier

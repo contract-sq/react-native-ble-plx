@@ -1943,6 +1943,18 @@ declare module 'react-native-ble-plx' {
     writeWithResponse(valueBase64: Base64, transactionId?: string): Promise<Characteristic>
 
     /**
+     * {@link #blemanagerwritecharacteristicwithresponsefordevice|bleManager.writeCharacteristicWithResponseForDevice()} with partially filled arguments.
+     *
+     * @param {Base64} valueBase64 Value in Base64 format.
+     * @param {?TransactionId} transactionId optional `transactionId` which can be used in
+     * @param {number} delayMilliseconds delay in milliseconds for the second command to be sent
+     * {@link #blemanagercanceltransaction|bleManager.cancelTransaction()} function.
+     * @returns {Promise<Characteristic>} Promise which emits this {@link Characteristic}. Latest value may
+     * not be stored inside returned object.
+     */
+    writeDoubleWithResponse(valueBase64: Base64, transactionId?: string): Promise<Characteristic>
+
+    /**
      * {@link #blemanagerwritecharacteristicwithoutresponsefordevice|bleManager.writeCharacteristicWithoutResponseForDevice()} with partially filled arguments.
      *
      * @param {Base64} valueBase64 Value in Base64 format.

@@ -919,6 +919,33 @@ export class BleManager {
   }
 
   /**
+   * Write {@link Characteristic} value without response.
+   *
+   * @param {Identifier} characteristicIdentifier {@link Characteristic} UUID.
+   * @param {Base64} base64Value Value in Base64 format.
+   * @param {?TransactionId} transactionId optional `transactionId` which can be used in
+   * @param {number} delayMilliseconds delay in milliseconds for the second command to be sent
+   * {@link #blemanagercanceltransaction|cancelTransaction()} function.
+   * @returns {Promise<Characteristic>} Promise which emits first {@link Characteristic} object matching specified ID.
+   * Latest value of characteristic may not be stored inside returned object.
+   * @private
+   */
+  async _writeDoubleCharacteristic(
+    characteristicIdentifier: Identifier,
+    base64Value: Base64,
+    transactionId: ?TransactionId,
+    delayMilliseconds: number
+  ): Promise<Characteristic> {
+    if (!transactionId) {
+      transactionId = this._nextUniqueID()
+    }
+    const nativeCharacteristic = await this._callPromise(
+      BleModule.writeDoubleCharacteristic(characteristicIdentifier, base64Value, false, transactionId, delayMilliseconds)
+    )
+    return new Characteristic(nativeCharacteristic, this)
+  }
+
+  /**
    * Monitor value changes of a {@link Characteristic}. If notifications are enabled they will be used
    * in favour of indications.
    *

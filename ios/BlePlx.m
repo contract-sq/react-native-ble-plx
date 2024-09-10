@@ -340,6 +340,21 @@ RCT_EXPORT_METHOD(writeCharacteristic:(nonnull NSNumber*)characteristicIdentifie
                            reject:reject];
 }
 
+RCT_EXPORT_METHOD(writeDoubleCharacteristic:(nonnull NSNumber*)characteristicIdentifier
+                          valueBase64:(NSString*)valueBase64
+                         withResponse:(BOOL)response
+                        transactionId:(NSString*)transactionId
+                    delayMilliseconds:(NSInteger)delayMilliseconds  // Add delay parameter
+                             resolver:(RCTPromiseResolveBlock)resolve
+                             rejecter:(RCTPromiseRejectBlock)reject) {
+    [_manager writeDoubleCharacteristic:characteristicIdentifier.doubleValue
+                      valueBase64:valueBase64
+                         response:response
+                    transactionId:transactionId
+                delayMilliseconds:delayMilliseconds  // Pass delay to the native method
+                          resolve:resolve
+                           reject:reject];
+
 RCT_EXPORT_METHOD(monitorCharacteristicForDevice:(NSString*)deviceIdentifier
                                      serviceUUID:(NSString*)serviceUUID
                               characteristicUUID:(NSString*)characteristicUUID

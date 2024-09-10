@@ -82,66 +82,66 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # if __has_feature(objc_class_property)
 #  define SWIFT_CLASS_PROPERTY(...) __VA_ARGS__
 # else
-#  define SWIFT_CLASS_PROPERTY(...) 
+#  define SWIFT_CLASS_PROPERTY(...)
 # endif
 #endif
 #if !defined(SWIFT_RUNTIME_NAME)
 # if __has_attribute(objc_runtime_name)
 #  define SWIFT_RUNTIME_NAME(X) __attribute__((objc_runtime_name(X)))
 # else
-#  define SWIFT_RUNTIME_NAME(X) 
+#  define SWIFT_RUNTIME_NAME(X)
 # endif
 #endif
 #if !defined(SWIFT_COMPILE_NAME)
 # if __has_attribute(swift_name)
 #  define SWIFT_COMPILE_NAME(X) __attribute__((swift_name(X)))
 # else
-#  define SWIFT_COMPILE_NAME(X) 
+#  define SWIFT_COMPILE_NAME(X)
 # endif
 #endif
 #if !defined(SWIFT_METHOD_FAMILY)
 # if __has_attribute(objc_method_family)
 #  define SWIFT_METHOD_FAMILY(X) __attribute__((objc_method_family(X)))
 # else
-#  define SWIFT_METHOD_FAMILY(X) 
+#  define SWIFT_METHOD_FAMILY(X)
 # endif
 #endif
 #if !defined(SWIFT_NOESCAPE)
 # if __has_attribute(noescape)
 #  define SWIFT_NOESCAPE __attribute__((noescape))
 # else
-#  define SWIFT_NOESCAPE 
+#  define SWIFT_NOESCAPE
 # endif
 #endif
 #if !defined(SWIFT_RELEASES_ARGUMENT)
 # if __has_attribute(ns_consumed)
 #  define SWIFT_RELEASES_ARGUMENT __attribute__((ns_consumed))
 # else
-#  define SWIFT_RELEASES_ARGUMENT 
+#  define SWIFT_RELEASES_ARGUMENT
 # endif
 #endif
 #if !defined(SWIFT_WARN_UNUSED_RESULT)
 # if __has_attribute(warn_unused_result)
 #  define SWIFT_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
 # else
-#  define SWIFT_WARN_UNUSED_RESULT 
+#  define SWIFT_WARN_UNUSED_RESULT
 # endif
 #endif
 #if !defined(SWIFT_NORETURN)
 # if __has_attribute(noreturn)
 #  define SWIFT_NORETURN __attribute__((noreturn))
 # else
-#  define SWIFT_NORETURN 
+#  define SWIFT_NORETURN
 # endif
 #endif
 #if !defined(SWIFT_CLASS_EXTRA)
-# define SWIFT_CLASS_EXTRA 
+# define SWIFT_CLASS_EXTRA
 #endif
 #if !defined(SWIFT_PROTOCOL_EXTRA)
-# define SWIFT_PROTOCOL_EXTRA 
+# define SWIFT_PROTOCOL_EXTRA
 #endif
 #if !defined(SWIFT_ENUM_EXTRA)
-# define SWIFT_ENUM_EXTRA 
+# define SWIFT_ENUM_EXTRA
 #endif
 #if !defined(SWIFT_CLASS)
 # if __has_attribute(objc_subclassing_restricted)
@@ -172,14 +172,14 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # if __has_attribute(objc_designated_initializer)
 #  define OBJC_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
 # else
-#  define OBJC_DESIGNATED_INITIALIZER 
+#  define OBJC_DESIGNATED_INITIALIZER
 # endif
 #endif
 #if !defined(SWIFT_ENUM_ATTR)
 # if __has_attribute(enum_extensibility)
 #  define SWIFT_ENUM_ATTR(_extensibility) __attribute__((enum_extensibility(_extensibility)))
 # else
-#  define SWIFT_ENUM_ATTR(_extensibility) 
+#  define SWIFT_ENUM_ATTR(_extensibility)
 # endif
 #endif
 #if !defined(SWIFT_ENUM)
@@ -217,7 +217,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if defined(__OBJC__)
 #if !defined(IBSegueAction)
-# define IBSegueAction 
+# define IBSegueAction
 #endif
 #endif
 #if !defined(SWIFT_EXTERN)
@@ -242,7 +242,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__cplusplus)
 # define SWIFT_NOEXCEPT noexcept
 #else
-# define SWIFT_NOEXCEPT 
+# define SWIFT_NOEXCEPT
 #endif
 #if defined(_WIN32)
 #if !defined(SWIFT_IMPORT_STDLIB_SYMBOL)
@@ -250,7 +250,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #else
 #if !defined(SWIFT_IMPORT_STDLIB_SYMBOL)
-# define SWIFT_IMPORT_STDLIB_SYMBOL 
+# define SWIFT_IMPORT_STDLIB_SYMBOL
 #endif
 #endif
 #if defined(__OBJC__)
@@ -319,6 +319,13 @@ SWIFT_PROTOCOL("_TtP23MultiplatformBleAdapter10BleAdapter_")
 - (void)writeCharacteristicForDevice:(NSString * _Nonnull)deviceIdentifier serviceUUID:(NSString * _Nonnull)serviceUUID characteristicUUID:(NSString * _Nonnull)characteristicUUID valueBase64:(NSString * _Nonnull)valueBase64 response:(BOOL)response transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
 - (void)writeCharacteristicForService:(double)serviceIdentifier characteristicUUID:(NSString * _Nonnull)characteristicUUID valueBase64:(NSString * _Nonnull)valueBase64 response:(BOOL)response transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
 - (void)writeCharacteristic:(double)characteristicIdentifier valueBase64:(NSString * _Nonnull)valueBase64 response:(BOOL)response transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
+- (void)writeDoubleCharacteristic:(double)characteristicIdentifier
+                valueBase64:(NSString * _Nonnull)valueBase64
+                   response:(BOOL)response
+              transactionId:(NSString * _Nonnull)transactionId
+          delayMilliseconds:(NSInteger)delayMilliseconds  // New parameter for delay
+                    resolve:(void (^ _Nonnull)(id _Nullable))resolve
+                     reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
 - (void)monitorCharacteristicForDevice:(NSString * _Nonnull)deviceIdentifier serviceUUID:(NSString * _Nonnull)serviceUUID characteristicUUID:(NSString * _Nonnull)characteristicUUID transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
 - (void)monitorCharacteristicForService:(double)serviceIdentifier characteristicUUID:(NSString * _Nonnull)characteristicUUID transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;
 - (void)monitorCharacteristic:(double)characteristicIdentifier transactionId:(NSString * _Nonnull)transactionId resolve:(void (^ _Nonnull)(id _Nullable))resolve reject:(void (^ _Nonnull)(NSString * _Nullable, NSString * _Nullable, NSError * _Nullable))reject;

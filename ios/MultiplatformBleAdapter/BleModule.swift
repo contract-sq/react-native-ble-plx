@@ -848,6 +848,58 @@ public class BleClientManager : NSObject {
                                          promise: SafePromise(resolve: resolve, reject: reject))
     }
 
+    @objc
+    public func writeDoubleCharacteristic(_ characteristicIdentifier: Double,
+                                    valueBase64: String,
+                                    response: Bool,
+                                    transactionId: String,
+                                    delayMilliseconds: Int,  // Delay for the second command
+                                    resolve: @escaping Resolve,
+                                    reject: @escaping Reject) {
+        guard let value = valueBase64.fromBase64 else {
+            return BleError.invalidWriteDataForCharacteristic(characteristicIdentifier.description, data: valueBase64)
+                .callReject(reject)
+        }
+
+        // Create a dispatch group to wait for both writes to complete
+        let dispatchGroup = DispatchGroup()
+
+        // Start the first write immediately
+        dispatchGroup.enter()  // Enter the group for the first operation
+        safeWriteCharacteristicForDevice(getCharacteristic(characteristicIdentifier),
+                                         value: value,
+                                         response: response,
+                                         transactionId: transactionId,
+                                         promise: SafePromise(
+                                             resolve: { _ in
+                                                 dispatchGroup.leave()  // Leave the group when the first operation completes
+                                             },
+                                             reject: reject)
+                                         )
+
+        // Delay the second write by the specified number of milliseconds
+        let delayTime = DispatchTime.now() + .milliseconds(delayMilliseconds)
+        dispatchGroup.enter()  // Enter the group for the second operation
+        DispatchQueue.global().asyncAfter(deadline: delayTime) {
+            let newTransactionId = transactionId + "_delayed"
+            self.safeWriteCharacteristicForDevice(self.getCharacteristic(characteristicIdentifier),
+                                                  value: value,
+                                                  response: response,
+                                                  transactionId: newTransactionId,
+                                                  promise: SafePromise(
+                                                      resolve: { _ in
+                                                          dispatchGroup.leave()  // Leave the group when the second operation completes
+                                                      },
+                                                      reject: reject)
+                                                  )
+        }
+
+        // Once both operations (first and delayed) are done, resolve the promise
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            resolve(true)  // Resolve the promise after both operations
+        }
+    }
+
     private func safeWriteCharacteristicForDevice(_ characteristicObservable: Observable<Characteristic>,
                                                                        value: Data,
                                                                     response: Bool,
