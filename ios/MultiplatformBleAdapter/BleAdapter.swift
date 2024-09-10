@@ -149,6 +149,15 @@ import Foundation
                              transactionId: String,
                              resolve: @escaping Resolve,
                              reject: @escaping Reject)
+    
+    func writeDoubleCharacteristic(_ characteristicIdentifier: Double,
+                             valueBase64: String,
+                             response: Bool,
+                             transactionId: String,
+                             delayMilliseconds: Int,
+                             resolve: @escaping Resolve,
+                             reject: @escaping Reject)
+
 
     func monitorCharacteristicForDevice(_ deviceIdentifier: String,
                                         serviceUUID: String,
