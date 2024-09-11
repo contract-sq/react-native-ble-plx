@@ -1,6 +1,6 @@
 {
   "name": "react-native-ble-plx-pulsetto",
-  "version": "3.2. ",
+  "version": "3.2.1",
   "description": "React Native Bluetooth Low Energy library",
   "main": "src/index",
   "module": "src/index",
