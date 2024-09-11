@@ -4,7 +4,7 @@ public typealias BleAdapterCreator = (_ queue: DispatchQueue, _ restoreIdentifie
 
 // MARK: - BleAdapterFactory
 
-@objc
+@objc(BleAdapterFactory)
 public class BleAdapterFactory: NSObject {
 
     private static var bleAdapterCreator: BleAdapterCreator = { (queue, restoreIdentifierKey) in

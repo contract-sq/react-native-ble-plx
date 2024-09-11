@@ -285,7 +285,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSString;
 @class NSError;
 
-SWIFT_PROTOCOL("_TtP23MultiplatformBleAdapter10BleAdapter_")
+SWIFT_PROTOCOL("BleAdapter")
 @protocol BleAdapter
 @property (nonatomic, strong) id <BleClientManagerDelegate> _Nullable delegate;
 - (nonnull instancetype)initWithQueue:(dispatch_queue_t _Nonnull)queue restoreIdentifierKey:(NSString * _Nullable)restoreIdentifierKey;
@@ -340,7 +340,7 @@ SWIFT_PROTOCOL("_TtP23MultiplatformBleAdapter10BleAdapter_")
 @end
 
 
-SWIFT_CLASS("_TtC23MultiplatformBleAdapter17BleAdapterFactory")
+SWIFT_CLASS("BleAdapterFactory")
 @interface BleAdapterFactory : NSObject
 + (id <BleAdapter> _Nonnull)getNewAdapterWithQueue:(dispatch_queue_t _Nonnull)queue restoreIdentifierKey:(NSString * _Nullable)restoreIdentifierKey SWIFT_WARN_UNUSED_RESULT;
 + (void)setBleAdapterCreator:(id <BleAdapter> _Nonnull (^ _Nonnull)(dispatch_queue_t _Nonnull, NSString * _Nullable))bleAdapterCreator;
@@ -348,7 +348,7 @@ SWIFT_CLASS("_TtC23MultiplatformBleAdapter17BleAdapterFactory")
 @end
 
 
-SWIFT_CLASS("_TtC23MultiplatformBleAdapter16BleClientManager")
+SWIFT_CLASS("BleClientManager")
 @interface BleClientManager : NSObject
 @property (nonatomic, strong) id <BleClientManagerDelegate> _Nullable delegate;
 - (nonnull instancetype)initWithQueue:(dispatch_queue_t _Nonnull)queue restoreIdentifierKey:(NSString * _Nullable)restoreIdentifierKey OBJC_DESIGNATED_INITIALIZER;
@@ -402,13 +402,13 @@ SWIFT_CLASS("_TtC23MultiplatformBleAdapter16BleClientManager")
 @end
 
 
-SWIFT_PROTOCOL("_TtP23MultiplatformBleAdapter24BleClientManagerDelegate_")
+SWIFT_PROTOCOL("BleClientManagerDelegate")
 @protocol BleClientManagerDelegate
 - (void)dispatchEvent:(NSString * _Nonnull)name value:(id _Nonnull)value;
 @end
 
 
-SWIFT_CLASS("_TtC23MultiplatformBleAdapter8BleEvent")
+SWIFT_CLASS("BleEvent")
 @interface BleEvent : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull scanEvent;)
 + (NSString * _Nonnull)scanEvent SWIFT_WARN_UNUSED_RESULT;

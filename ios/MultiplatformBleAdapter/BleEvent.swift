@@ -6,7 +6,7 @@
 
 import Foundation
 
-@objc
+@objc(BleEvent)
 public class BleEvent: NSObject {
 
     @objc

@@ -7,12 +7,12 @@
 import Foundation
 import CoreBluetooth
 
-@objc
+@objc(BleClientManagerDelegate)
 public protocol BleClientManagerDelegate {
     func dispatchEvent(_ name: String, value: Any)
 }
 
-@objc
+@objc(BleClientManager)
 public class BleClientManager : NSObject {
 
     // Delegate is used to send events to
