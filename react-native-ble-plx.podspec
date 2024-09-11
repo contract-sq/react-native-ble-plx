@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "11.0" }
   s.source       = { :git => "https://github.com/contract-sq/react-native-ble-plx.git", :tag => "3.2.2" }
 
-  s.source_files = "ios/**/*.{h,m,mm}"
+  s.source_files = "ios/**/*.{h,m,mm,swift}"
 #   s.dependency "MultiplatformBleAdapter", "0.2.0"
   s.preserve_paths = "ios/MultiplatformBleAdapter/**"
   s.compiler_flags = "-DMULTIPLATFORM_BLE_ADAPTER -fmodules -fcxx-modules"
